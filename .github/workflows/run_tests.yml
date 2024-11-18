@@ -8,7 +8,7 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-  steps:
+  user:
     - name: Checkout repository
       uses: actions/checkout@v4.1.6
     - name: setup Python
