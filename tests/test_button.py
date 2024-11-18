@@ -1,7 +1,7 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 import pytest
-from selenium.webdriver.chrome.options import Options  # это для безголового режима
+from selenium.webdriver.chrome.options import Options  # это для безголового режим
 
 
 @pytest.fixture()
