@@ -7,10 +7,10 @@ on:
         description: Choose target
         required: true
         default:
-          type: choise
-          option:
-            - first_test
-            - second_test
+        type: choise
+        options:
+          - first_test
+          - second_test
 
 jobs:
   test:
