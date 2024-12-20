@@ -11,7 +11,6 @@ on:
         options:
           - first_test
           - second_test
-          - all_tests
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -33,6 +32,3 @@ jobs:
       - name: second_test
         if: "github.event.inputs.deployment_target == 'second_test'"
         run: pytest tests/test_button.py::test_button_exist_2
-      - name: all_tests
-        if: "github.event.inputs.deployment_target == 'all_tests'"
-        run: pytest
