@@ -20,7 +20,7 @@ permissions: #Это просто нужно, что бы не было ошиб
 
 jobs: #Так мы сохраняем и дописываем исторю алюра.
   download-history:
-    if: false
+    #if: false
     runs-on: ubuntu-latest
     name: Download history
     steps:
@@ -29,7 +29,7 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
         with:
           python-version: "3.10"
       - run: >
-          ARTIFACT_ID=$(curl -L  #Так мы получаем ID нашего артефакта, который был сгенерен
+          ARTIFACT_ID=$(curl -L
           -H "Accept: application/vnd.github+json" 
           -H "X-GitHub-Api-Version: 2022-11-28" 
           "https://api.github.com/repos/Esipenok/test_git_new/actions/artifacts?name=allure-results" 
