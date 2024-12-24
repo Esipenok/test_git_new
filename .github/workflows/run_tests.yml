@@ -21,7 +21,10 @@ permissions: #Это просто нужно, что бы не было ошиб
 jobs: #Так мы сохраняем и дописываем исторю алюра.
   test: #Так мы создаем автотесты, с вариантами выбора.
       runs-on: ubuntu-latest
-      
+      outputs:
+        first_test: ${{ steps.good.outcome }}
+        second_test: ${{ steps.good.outcome }}
+        all_tests: ${{ steps.good.outcome }}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4.1.6
@@ -87,5 +90,23 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
         - name: Upload Pages artifact
           uses: actions/upload-pages-artifact@v2
         - name: Deploy to GitHub Pages
-          id: deployment
-          uses: actions/deploy-pages@v1.2.9  
+          id: deployment        
+          uses: actions/deploy-pages@v4
+        - name: success
+          if: needs.test.outputs.good != 'failure' && needs.test.outputs.bad != 'failure' && needs.test.outputs.all != 'failure'
+          run: |
+            curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":white_check_mark: Testing finished. Report is here: https://esipenok.github.io/test_git_new/"}'
+        - name: failure
+          if: needs.test.outputs.good == 'failure' || needs.test.outputs.bad == 'failure' || needs.test.outputs.all == 'failure'
+          run: |
+            curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":rage: Testing finished. Report is here: https://esipenok.github.io/test_git_new/"}'
+
+
+
+        
+          if: needs.test.outputs.good != 'failure' && needs.test.outputs.bad != 'failure' && needs.test.outputs.all != 'failure'
+          run: |
+          curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text":":white_check_mark:First test finish. Report is here:https://esipenok.github.io/test_git_new/"}'
+          if: needs.test.outputs.good == 'failure' || needs.test.outputs.bad == 'failure' || needs.test.outputs.all == 'failure'
+          run: |
+          curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":rage: Second test finish. Report is here: esipenok.github.io/test_git_new/"}'
