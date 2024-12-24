@@ -17,7 +17,7 @@ def browser():
     crome_browser = webdriver.Chrome(options=options)
     return crome_browser
 
-
+@pytest.mark.first_test
 @allure.feature('first_test')#Так мы указываем, в какую группу попадет данный тест. Можно писать название стори или фичи.
 # первый тест
 @allure.story('displayed')# Это уже идет как подкатегория. Тут можно писать элементы стори или фичи
@@ -26,7 +26,7 @@ def test_button_exist_1(browser):
     assert browser.find_element(By.ID, 'submit-id-submit').is_displayed()
 
 
-
+@pytest.mark.first_test
 @allure.feature('second_test')
 # второй тест
 @allure.story('displayed_2')
