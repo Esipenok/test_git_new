@@ -22,9 +22,9 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
   test: #Так мы создаем автотесты, с вариантами выбора.
       runs-on: ubuntu-latest
       outputs:
-        first_test: ${{ steps.good.outcome }}
-        second_test: ${{ steps.good.outcome }}
-        all_tests: ${{ steps.good.outcome }}
+        first_test: ${{ steps.first_test.outcome }}
+        second_test: ${{ steps.second_test.outcome }}
+        all_tests: ${{ steps.all_tests.outcome }}
       steps:
         - name: Checkout repository
           uses: actions/checkout@v4.1.6
@@ -93,10 +93,10 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
           id: deployment        
           uses: actions/deploy-pages@v4
         - name: success
-          if: needs.test.outputs.good != 'failure' && needs.test.outputs.bad != 'failure' && needs.test.outputs.all != 'failure'
+          if: needs.test.outputs.first_test != 'failure' && needs.test.outputs.second_test != 'failure' && needs.test.outputs.all_tests != 'failure'
           run: |
             curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":white_check_mark: Testing finished. Report is here: https://esipenok.github.io/test_git_new/"}'
         - name: failure
-          if: needs.test.outputs.good == 'failure' || needs.test.outputs.bad == 'failure' || needs.test.outputs.all == 'failure'
+          if: needs.test.outputs.first_test == 'failure' || needs.test.outputs.second_test == 'failure' || needs.test.outputs.all_tests == 'failure'
           run: |
             curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":rage: Testing finished. Report is here: https://esipenok.github.io/test_git_new/"}'
