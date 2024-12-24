@@ -100,13 +100,3 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
           if: needs.test.outputs.good == 'failure' || needs.test.outputs.bad == 'failure' || needs.test.outputs.all == 'failure'
           run: |
             curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":rage: Testing finished. Report is here: https://esipenok.github.io/test_git_new/"}'
-
-
-
-        
-          if: needs.test.outputs.good != 'failure' && needs.test.outputs.bad != 'failure' && needs.test.outputs.all != 'failure'
-          run: |
-          curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text":":white_check_mark:First test finish. Report is here:https://esipenok.github.io/test_git_new/"}'
-          if: needs.test.outputs.good == 'failure' || needs.test.outputs.bad == 'failure' || needs.test.outputs.all == 'failure'
-          run: |
-          curl --location 'https://hooks.slack.com/services/${{ secrets.st_slack }}' --header 'Content-Type: application/json' --data '{"text": ":rage: Second test finish. Report is here: esipenok.github.io/test_git_new/"}'
