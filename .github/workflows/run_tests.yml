@@ -91,7 +91,7 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
           uses: actions/upload-pages-artifact@v2
         - name: Deploy to GitHub Pages
           id: deployment        
-          uses: actions/deploy-pages@v4
+          uses: actions/github-pages-deploy-action@v4
         - name: success
           if: needs.test.outputs.first_test != 'failure' && needs.test.outputs.second_test != 'failure' && needs.test.outputs.all_tests != 'failure'
           run: |
