@@ -48,27 +48,11 @@ jobs: #Так мы сохраняем и дописываем исторю ал�
           if: "github.event.inputs.deployment_target == 'all_tests'"
           run: pytest --alluredir=allure-results
           continue-on-error: true
-        - name: Store allure results
-          uses: actions/upload-artifact@v3
-          with:
-            name: allure-results
-            path:
-              allure-results
-            retention-days: 1
-
-
-  generate-report: #так мы создаем репорт алюра. Устанавливаем джаву. Устанавливаем алюр. Генерим репорт и задаем ему название _site.
-      runs-on: ubuntu-latest
-      needs: test
-      name: Generate report
-      steps:
         - uses: actions/setup-java@v4
           with:
             distribution: 'microsoft' # See 'Supported distributions' for available options
-            java-version: '17' #change version 23.0.1
-        - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.32.0/allure-2.32.0.tgz && sudo tar -zxvf allure-2.32.0.tgz -C /opt/ && sudo ln -s /opt/allure-2.32.0/bin/allure /usr/bin/allure
-        - name: Download all workflow run artifacts
-          uses: actions/download-artifact@v3
+            java-version: '17'
+        - run: sudo wget https://github.com/allure-framework/allure2/releases/download/2.23.1/allure-2.23.1.tgz && sudo tar -zxvf allure-2.23.1.tgz -C /opt/ && sudo ln -s /opt/allure-2.23.1/bin/allure /usr/bin/allure
         - run: allure generate -c allure-results -o _site
         - name: Store generated report
           uses: actions/upload-artifact@v4
